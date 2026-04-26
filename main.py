@@ -9,7 +9,7 @@ def multiply(a, b):
 
 def divide(a, b):
     if b == 0:
-        return "Деление на ноль!"
+        return "Ошибка: Делить на ноль нельзя!"
     return a / b
 
 
