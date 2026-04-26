@@ -1,5 +1,24 @@
-.idea/
-venv/
+# Виртуальные окружения
 .venv/
-__pyache__/
+venv/
+env/
+
+# Кэш Python
+__pycache__/
 *.pyc
+*.pyo
+
+# Настройки IDE
+.idea/
+.vscode/
+
+# Системное
+.DS_Store
+Thumbs.db
+
+# Секреты и переменные окружения
+.env
+*.env
+
+# Логи
+*.log
