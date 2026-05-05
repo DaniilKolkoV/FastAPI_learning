@@ -27,3 +27,5 @@
 **День 10:** Pydantic — модели, type coercion, Field с ограничениями, EmailStr, обработка ValidationError.
 
 **День 11:** Pydantic продолжение — вложенные модели, Optional поля, кастомные валидаторы через @field_validator.
+
+**День 12:** Повторил классы — наследование, super(). Изучил @dataclass: автогенерация __init__, __repr__, __eq__, frozen-классы. Сравнил с Pydantic.
