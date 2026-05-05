@@ -1,33 +1,41 @@
-from pydantic import BaseModel, Field, ValidationError, EmailStr
+from pydantic import BaseModel, field_validator, Field
 
+class Account(BaseModel):
+    username: str
+    age: int = Field(ge=0)
+    password: str = Field(min_length=8)
 
-class User(BaseModel):
-    name: str = Field(min_length=1, max_length=50)
-    age: int = Field(ge=0, le=150)
-    email: EmailStr
+    @field_validator("username")
+    @classmethod
+    def username_check(cls, value: str) -> str:
+        if not value.isascii():
+            raise ValueError("Используйте только латиницу")
+        return value
+
+    @field_validator("password")
+    @classmethod
+    def password_must_have_digit(cls, value: str) -> str:
+        if not any(char.isdigit() for char in value):
+            raise ValueError("Пароль должен содержать хотя бы одну цифру")
+        return value
+
+accoumt1 = Account(username = "Daniil", age = 20, password = "12345678")
+print(accoumt1)
 
 try:
-    user1 = User(name = "Victor", age = 27, email = "victor@gmail.com")
-    print(user1)
+    accoumt2 = Account(username = "Витя", age = 20, password = "12345678")
+    print(accoumt2)
 except ValueError as e:
-    print(f"Не удалось создать пользователя, поймал ошибку - {e}")
+    print(f"Не удалось создать пользователя, из-за ошибки :{e}")
 
 try:
-    user2 = User(name = "", age = 13, email = "pusto@q.ru")
-    print(user2)
+    accoumt3 = Account(username = "Artur", age = -1, password = "12345678")
+    print(accoumt3)
 except ValueError as e:
-    print(f"Не удалось создать пользователя, поймал ошибку - {e}")
+    print(f"Не удалось создать пользователя, из-за ошибки :{e}")
 
 try:
-    user3 = User(name = "Anna", age = -5, email = "pochta_dima")
-    print(user3)
+    accoumt4 = Account(username = "Daniil", age = 20, password = "1234567")
+    print(accoumt4)
 except ValueError as e:
-    print(f"Не удалось создать пользователя, поймал ошибку - {e}")
-
-try:
-    user4 = User(name = "Dima", age = 200, email = "anya_email")
-    print(user4)
-except ValidationError as e:
-    print(f"Не удалось создать пользователя, поймал ошибку - {e}")
-    print("=============")
-    print("Структурированные ошибки:", e.errors())
+    print(f"Не удалось создать пользователя, из-за ошибки :{e}")
